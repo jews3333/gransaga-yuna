@@ -1,7 +1,8 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Main from './components/Main';
-import List from './components/List';
+import Main from './pages/Main';
+import List from './pages/List';
+import Error from './pages/Error';
 
 function Router(){
     return (
@@ -9,6 +10,7 @@ function Router(){
             <Routes>
                 <Route path="/" element={<Main/>}/>
                 <Route path="/list" element={<List/>}/>
+                <Route path="/*" element={<Error/>}/>
             </Routes>
         </BrowserRouter>
     )
