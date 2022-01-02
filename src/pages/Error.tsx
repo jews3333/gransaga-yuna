@@ -3,7 +3,7 @@ import React from "react";
 function Error(){
     return (
         <div>
-            Error
+            존재하지 않는 페이지 
         </div>
     )
 }

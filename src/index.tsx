@@ -3,12 +3,19 @@ import ReactDOM from 'react-dom';
 import Router from './Router';
 import reportWebVitals from './reportWebVitals';
 
-import './res/css/index.scss';
+import './res/css/base.scss';
+import './res/css/style.scss';
+
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from './reducers';
+
+const store = createStore(rootReducer);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <Router />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
