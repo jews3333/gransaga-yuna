@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import auth from './auth';
 import member from './member';
+import round from './round';
 
 const rootReducer = combineReducers({
     auth,
-    member
+    member,
+    round
 });
 
 export default rootReducer;
