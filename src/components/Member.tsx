@@ -14,6 +14,7 @@ function Member(){
             <caption></caption>
             <thead>
                 <tr>
+                    <th>번호</th>
                     <th>이름</th>
                     <th>등급</th>
                 </tr>
@@ -23,6 +24,7 @@ function Member(){
                     member && 
                     Object.keys(member).map((e,i) => {
                         return <tr key={i}>
+                            <td>{i+1}</td>
                             <td>{member[e].id}</td>
                             <td>{member[e].class == 1 ? "길드마스터" : member[e].class == 2 ? "서브마스터" : "길드멤버"}</td>
                         </tr>

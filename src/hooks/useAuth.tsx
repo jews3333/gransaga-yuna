@@ -26,9 +26,16 @@ function useAuth(){
 
     }, [dispatch]);
 
+    const onExistesAuth = useCallback(async (code:string) => {
+        dispatch(getAuth(false));
+
+    }, [dispatch]);
+ 
+
     return {
         auth,
-        onGetAuth
+        onGetAuth,
+        onExistesAuth
     }
 }
 

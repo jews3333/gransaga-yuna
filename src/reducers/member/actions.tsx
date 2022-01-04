@@ -1,9 +1,9 @@
 import { createAction } from 'typesafe-actions';
 
-export const GET_MEMBER = 'portfolio/GET_MEMBER';
-export const ADD_MEMBER = 'portfolio/ADD_MEMBER';
-export const SET_MEMBER = 'portfolio/SET_MEMBER';
-export const DEL_MEMBER = 'portfolio/DEL_MEMBER';
+export const GET_MEMBER = 'member/GET_MEMBER';
+export const ADD_MEMBER = 'member/ADD_MEMBER';
+export const SET_MEMBER = 'member/SET_MEMBER';
+export const DEL_MEMBER = 'member/DEL_MEMBER';
 
 export const getMember = createAction(GET_MEMBER)<any>();
 export const addMember = createAction(ADD_MEMBER)<any>();

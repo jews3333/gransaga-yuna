@@ -23,17 +23,32 @@ textarea {
     font-size:0.9em;
     font-family: inherit;
     border:1px solid #ccc;
-    max-width:100%;   
+    max-width:100%; 
 }
 
 input {
     height:2.5em;
     padding:0 1em;
+    vertical-align: middle;
 }
 
 select {
     height:2.5em;
     padding:0 2em 0 1em;
+    vertical-align: middle;
+}
+
+textarea {
+    vertical-align: top;
+}
+
+label {
+    cursor: pointer;
+}
+
+input + label {
+    vertical-align: middle;
+    margin-left:0.25em;
 }
 
 button {
@@ -68,10 +83,12 @@ table {
     th {
         background: #f2f2f2;
         height:3em;
+        padding: 0.5em;
     }
     
     td {
         height: 3em;
+        padding: 0.5em;
         text-align: center;
         border-bottom: 1px solid #eee;
     }
@@ -142,6 +159,14 @@ table {
     }
 }
 
+.txt-center {
+    text-align: center;
+}
+
+.point {
+    color:#ff3636;
+}
+
 #container {
     width:100%;
     max-width: 800px;
@@ -166,4 +191,12 @@ table {
             margin: 5px;
         }
     }
+}
+
+.custom-datepicker-button {
+    max-width:100%;
+    border:1px solid #ccc;
+    height:2.5em;
+    font-size:0.9em;
+    padding:0 1em;
 }

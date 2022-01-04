@@ -20,7 +20,7 @@ function Admin(){
                 <dl>
                     <dt>
                         <strong>정령왕의 시련</strong><br/>
-                        {/* <Link to="./form/round" className="button update">수정</Link> */}
+                        <Link to="./form/round" className="button update">등록</Link>
                     </dt>
                     <dd>
                         <Round/>

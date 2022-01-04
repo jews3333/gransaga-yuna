@@ -9,7 +9,7 @@ function Auth(){
 
     useEffect(() => {
         if(auth){
-            alert("로그인 성공");
+            alert("로그인되었습니다.");
             navigate("/admin");
         }
     },[auth]);
@@ -23,7 +23,7 @@ function Auth(){
         if(code != "") {
             onGetCode(code);
         } else {
-            alert("코드 누락");
+            alert("코드가 누락되었습니다.");
         }
     }
 
@@ -31,7 +31,7 @@ function Auth(){
         onGetAuth(code)
         .then((result) => {
             if(!result){
-                alert("유효하지 않은 코드");
+                alert("코드가 일치하지 않습니다.");
             }
         });
     }

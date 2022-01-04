@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import useAuth from '../hooks/useAuth';
 import useMember from '../hooks/useMember';
 import { Link, useNavigate } from 'react-router-dom';
 
 function MemberForm(){
-    const [ update, setUpdate ] = useState<any>(null);
+    const [ data, setData ] = useState<any>(null);
+    const { onGetAuth } = useAuth();
     const { member, onGetMember, onSetMember, onAddMember, onDelMember } = useMember();
     const navigation = useNavigate();
 
@@ -13,39 +15,53 @@ function MemberForm(){
 
     useEffect(() => {
         if(member){
-            setUpdate(member);
+            setData(member);
         }
     }, [member]);
 
     const addMember = (event:React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        onAddMember("",3);
+        if(Object.keys(member).length < 10) onAddMember("",3)
+        else alert("30명 이상 추가 불가")
     }
 
     const setMember = (event:React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        onSetMember(update)
-        .then((result) => {
-            alert(result);
+        onSetMember(data)
+        .then((message) => {
+            alert(message);
             navigation("/admin");
         })
-        .catch(err => alert("저장 실패"));
+        .catch(err => alert("저장을 실패하였습니다."));
     }
 
     const delMember = (event:React.MouseEvent<HTMLButtonElement>, id:string) => {
         event.preventDefault();
-        if(!window.confirm("정말로 삭제?")){
-            return false;
+        let code = window.prompt("관리자 코드를 입력하세요");
+
+        if(code){
+            onGetAuth(code)
+            .then((result) => {
+                if(!result) {
+                    alert("코드가 일치하지 않습니다.");
+                } else {
+                    onDelMember(id)
+                    .then((message) => {
+                        alert(message);
+                    })
+                }
+            })
+        } else {
+            alert("코드를 입력하세요.");
         }
-        onDelMember(id);
     }
 
     const changeId = (event:React.ChangeEvent<HTMLInputElement>, id:string) => {
-        update[id].id = event.target.value;
+        data[id].id = event.target.value;
     }
 
     const changeClass = (event:React.ChangeEvent<HTMLSelectElement>, id:string) => {
-        update[id].class = Number(event.target.value);
+        data[id].class = Number(event.target.value);
     }
 
     return (
@@ -62,13 +78,13 @@ function MemberForm(){
                 </thead>
                 <tbody>
                     {
-                        update && 
-                        Object.keys(update).map((e,i) => {
+                        data && 
+                        Object.keys(data).map((e,i) => {
                             return <tr key={i}>
                                 <td>{i+1}</td>
-                                <td><input type="test" defaultValue={update[e].id} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeId(event, e)}/></td>
+                                <td><input type="test" defaultValue={data[e].id} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeId(event, e)}/></td>
                                 <td>
-                                    <select defaultValue={update[e].class} onChange={(event:React.ChangeEvent<HTMLSelectElement>) => changeClass(event, e)}>
+                                    <select defaultValue={data[e].class} onChange={(event:React.ChangeEvent<HTMLSelectElement>) => changeClass(event, e)}>
                                         <option value={1}>길드마스터</option>
                                         <option value={2}>서브마스터</option>
                                         <option value={3}>길드멤버</option>

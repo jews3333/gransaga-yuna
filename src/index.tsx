@@ -10,13 +10,19 @@ import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import rootReducer from './reducers';
 
+import { persistStore } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+
 const store = createStore(rootReducer);
+const persistor = persistStore(store);
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router />
-  </Provider>,
-  document.getElementById('root')
+    <Provider store={store}>
+        <PersistGate persistor={persistor}>
+            <Router />
+        </PersistGate>
+    </Provider>,
+    document.getElementById('root')
 );
 
 // If you want to start measuring performance in your app, pass a function

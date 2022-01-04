@@ -1,9 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../reducers';
 import { useCallback } from 'react';
-import { getRound, getRoundDetail } from '../reducers/round';
+import { getRound, setRoundDetail, delRoundDetail } from '../reducers/round';
 
-import { collection, query, orderBy, getDocs } from 'firebase/firestore';
+import { collection, query, doc, orderBy, getDocs, addDoc, setDoc, deleteDoc } from 'firebase/firestore';
 import { db } from '../firebase/init';
 
 function useRound(){
@@ -23,20 +23,54 @@ function useRound(){
             }
         });
 
-
         dispatch(getRound(list));
 
     }, [dispatch]);
 
-    const onGetRoundDetail = useCallback(async () => {
-        console.log(round);
+    const onSetRoundDetail = useCallback(async (data, id?) => {
+        let message = "";
 
+        if(id) {
+            await setDoc(doc(db, 'round', id), data)
+            .then(() => {
+                message = "저장이 완료되었습니다.";
+            })
+            .catch((err) => {
+                message = "저장을 실패하였습니다.";
+            });
+        } else {
+            await addDoc(collection(db, 'round'), data)
+            .then(() => {
+                message = "저장이 완료되었습니다.";
+            })
+            .catch((err) => {
+                message = "저장을 실패하였습니다.";
+            });
+        }
+
+        return message;
+    }, [dispatch]);
+
+    const onDelRoundDetail = useCallback(async (id) => {
+        let message = "";
+        
+        await deleteDoc(doc(db, 'round', id))
+        .then(() => {
+            dispatch(delRoundDetail(id));
+            message = "삭제가 완료되었습니다.";
+        })
+        .catch((err) => {
+            message = "삭제를 실패하였습니다.";
+        });
+
+        return message;
     }, [dispatch]);
 
     return {
         round,
         onGetRound,
-        onGetRoundDetail
+        onSetRoundDetail,
+        onDelRoundDetail
     }
 }
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 import useRound from '../hooks/useRound';
 import { FormatDate } from '../modules';
 
@@ -7,7 +8,10 @@ function RoundDetail(){
     const { id } = useParams();
 
     const [ detail, setDetail ] = useState<any>();
-    const { round, onGetRound } = useRound();
+    const { onGetAuth } = useAuth();
+    const { round, onGetRound, onDelRoundDetail } = useRound();
+
+    const navigation = useNavigate();
 
     useEffect(() => {
         if(!round)  onGetRound();
@@ -16,6 +20,30 @@ function RoundDetail(){
     useEffect(() => {
         if(id != undefined && round) setDetail(round[id]);
     }, [round, id]);
+
+    const delRoundDetail = (event:React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        if(id){
+            let code = window.prompt("관리자 코드를 입력하세요");
+
+            if(code){
+                onGetAuth(code)
+                .then((result) => {
+                    if(!result) {
+                        alert("코드가 일치하지 않습니다.");
+                    } else {
+                        onDelRoundDetail(id)
+                        .then((message) => {
+                            alert(message);
+                            navigation('/admin');
+                        });
+                    }
+                })
+            } else {
+                alert("코드를 입력하세요.");
+            }
+        }
+    }
 
     return (
         <>
@@ -50,13 +78,39 @@ function RoundDetail(){
                     <tr>
                         <th colSpan={2}>참여현황</th>
                     </tr>
-                    <tr>
-                        <td colSpan={2}></td>
-                    </tr>
+                    {
+                        detail && <>
+                            {
+                                Object.keys(round).map((e,i) => {
+                                    if(e == id) {
+                                        return <tr key={i}>
+                                            <td colSpan={2}>
+                                                <div className='round-member-header'>
+                                                    <span>번호</span>
+                                                    <span>이름</span>
+                                                    <span>참여/미참여</span>
+                                                    <span>비고</span>
+                                                </div>
+                                                {Object.keys(round[e].member).map((m,j) => {
+                                                    return <div key={j} className='round-member-data'>
+                                                        <span>{j+1}</span>
+                                                        <span>{round[e].member[m].id}</span>
+                                                        <span>{round[e].member[m].state ? "참여" : "미참여"}</span>
+                                                        <span>{round[e].member[m].note}</span>
+                                                    </div>
+                                                })}
+                                            </td>
+                                        </tr>
+                                    }
+                                })
+                            }
+                        </>
+                    }
                 </tbody>
             </table>
             <div className='submit-layout'>
                 <Link to={`/admin/form/round/${id}`} className='button submit'>수정</Link>
+                <button className='button delete' onClick={(event:React.MouseEvent<HTMLButtonElement>) => delRoundDetail(event)}>삭제</button>
             </div>
         </>
     )
