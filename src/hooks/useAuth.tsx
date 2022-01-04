@@ -26,16 +26,18 @@ function useAuth(){
 
     }, [dispatch]);
 
-    const onExistesAuth = useCallback(async (code:string) => {
+    const onDelAuth = useCallback(async () => {
+        let message = "로그아웃되었습니다.";
         dispatch(getAuth(false));
 
+        return message;
     }, [dispatch]);
  
 
     return {
         auth,
         onGetAuth,
-        onExistesAuth
+        onDelAuth
     }
 }
 

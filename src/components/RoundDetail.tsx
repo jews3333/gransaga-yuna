@@ -18,7 +18,9 @@ function RoundDetail(){
     }, []);
 
     useEffect(() => {
-        if(id != undefined && round) setDetail(round[id]);
+        if(id != undefined && round) {
+            setDetail(round[id]);
+        }
     }, [round, id]);
 
     const delRoundDetail = (event:React.MouseEvent<HTMLButtonElement>) => {
@@ -57,54 +59,40 @@ function RoundDetail(){
                 </thead>
                 <tbody>
                     {
-                        detail && <>
-                            {
-                                Object.keys(round).map((e,i) => {
-                                    if(e == id) {
-                                        return <tr key={i}>
-                                            <td>{round[e].target == 1 ? "바람 정령왕 킨" : round[e].target == 2 ? "땅 정령왕 디오네" : round[e].target == 3 ? "물 정령왕 마케이우" : round[e].target == 4 ? "불 정령왕 라카테쉬" : round[e].target == 5 ? "빛 정령왕 제네로" : round[e].target == 6 ? "어둠 정령왕 타나룸" : "???"}</td>
-                                            <td>
-                                                {FormatDate(round[e].start)}
-                                                <span> ~ </span>
-                                                {FormatDate(round[e].end)}
-                                            </td>
-                                        </tr>
-                                    }
-                                })
-                            }
-                        </>
+                        detail && 
+                        <tr>
+                            <td>{detail.target == 1 ? "바람 정령왕 킨" : detail.target == 2 ? "땅 정령왕 디오네" : detail.target == 3 ? "물 정령왕 마케이우" : detail.target == 4 ? "불 정령왕 라카테쉬" : detail.target == 5 ? "빛 정령왕 제네로" : detail.target == 6 ? "어둠 정령왕 타나룸" : "???"}</td>
+                            <td>
+                                {FormatDate(detail.start)}
+                                <span> ~ </span>
+                                {FormatDate(detail.end)}
+                            </td>
+                        </tr>
                         
                     }
                     <tr>
                         <th colSpan={2}>참여현황</th>
                     </tr>
                     {
-                        detail && <>
-                            {
-                                Object.keys(round).map((e,i) => {
-                                    if(e == id) {
-                                        return <tr key={i}>
-                                            <td colSpan={2}>
-                                                <div className='round-member-header'>
-                                                    <span>번호</span>
-                                                    <span>이름</span>
-                                                    <span>참여/미참여</span>
-                                                    <span>비고</span>
-                                                </div>
-                                                {Object.keys(round[e].member).map((m,j) => {
-                                                    return <div key={j} className='round-member-data'>
-                                                        <span>{j+1}</span>
-                                                        <span>{round[e].member[m].id}</span>
-                                                        <span>{round[e].member[m].state ? "참여" : "미참여"}</span>
-                                                        <span>{round[e].member[m].note}</span>
-                                                    </div>
-                                                })}
-                                            </td>
-                                        </tr>
-                                    }
-                                })
-                            }
-                        </>
+                        detail && 
+                        <tr>
+                            <td colSpan={2}>
+                                <div className='round-member-header'>
+                                    <span>번호</span>
+                                    <span>이름</span>
+                                    <span>참여/미참여</span>
+                                    <span>비고</span>
+                                </div>
+                                {Object.keys(detail.member).map((m,j) => {
+                                    return <div key={j} className='round-member-data'>
+                                        <span>{j+1}</span>
+                                        <span>{detail.member[m].id}</span>
+                                        <span className={`state${detail.member[m].state ? '1' : '2'}`}>{detail.member[m].state ? "참여" : "미참여"}</span>
+                                        <span>{detail.member[m].note}</span>
+                                    </div>
+                                })}
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>

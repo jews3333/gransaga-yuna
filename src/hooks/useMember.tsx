@@ -13,7 +13,7 @@ function useMember(){
     const onGetMember = useCallback(async () => {
         let list = {};
 
-        const qr = query(collection(db, 'member'), orderBy('class', 'asc'), orderBy('id', 'desc'));
+        const qr = query(collection(db, 'member'), orderBy('class'), orderBy('id'));
         const querySnapshot = await getDocs(qr);
 
         querySnapshot.forEach((doc) => {

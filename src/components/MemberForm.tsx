@@ -21,7 +21,7 @@ function MemberForm(){
 
     const addMember = (event:React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        if(Object.keys(member).length < 10) onAddMember("",3)
+        if(Object.keys(member).length < 30) onAddMember("",3)
         else alert("30명 이상 추가 불가")
     }
 
@@ -57,11 +57,23 @@ function MemberForm(){
     }
 
     const changeId = (event:React.ChangeEvent<HTMLInputElement>, id:string) => {
-        data[id].id = event.target.value;
+        setData({
+            ...data,
+            [id] : {
+                ...data[id],
+                id : event.target.value
+            }
+        });
     }
 
     const changeClass = (event:React.ChangeEvent<HTMLSelectElement>, id:string) => {
-        data[id].class = Number(event.target.value);
+        setData({
+            ...data,
+            [id] : {
+                ...data[id],
+                class : event.target.value
+            }
+        });
     }
 
     return (

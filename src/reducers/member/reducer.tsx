@@ -9,7 +9,6 @@ const member = createReducer<MemberState, MemberAction>(initialState, {
         action.payload
     ),
     [ADD_MEMBER] : (state, action) => {
-        console.log(state);
         return {
             ...state,
             ...action.payload

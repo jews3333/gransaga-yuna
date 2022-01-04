@@ -99,14 +99,15 @@ table {
     display:inline-flex;
     justify-content: center;
     align-items: center;
-    font-size:0.9em;
+    font-size:0.85em;
     height: 2.5em;
-    padding: 0 1.5em;
+    padding: 0 1em;
     background:#999;
     color:#fff;
+    border-radius: 0.3em;
 
     &.delete {
-        background:#ff3636;
+        background:#f44336;
     }
 
     &.add {
@@ -151,11 +152,11 @@ table {
     }
 
     &.update {
-        background:#335cff;
+        background:#2d71ca;
     }
 
     &.submit {
-        background:#335cff;
+        background:#2d71ca;
     }
 }
 
@@ -164,7 +165,7 @@ table {
 }
 
 .point {
-    color:#ff3636;
+    color:#f44336;
 }
 
 #container {
@@ -174,6 +175,7 @@ table {
     background:#fff;
     padding:3vw;
     box-shadow: 0.25vw 0.25vw 0.75vw rgba(0,0,0,.1);
+    margin-bottom: 3em;
 
     .content-title {
         font-size:1.4em;
@@ -187,9 +189,23 @@ table {
         margin-top: 3em;
 
         & > .button {
-            font-size:1em;
             margin: 5px;
         }
+    }
+
+    .sign-out {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        color: #fff;
+        background:#f44336;
+        text-align: center;
+        height:3em;
+        display:flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1;
     }
 }
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import Main from './pages/Main';
 import Admin from './pages/Admin';
 import Form from './pages/Form';
@@ -9,11 +9,24 @@ import Error from './pages/Error';
 import useAuth from './hooks/useAuth';
 
 function Router(){
-    const { auth } = useAuth();
+
+    const { auth, onDelAuth } = useAuth();
+
+    const delAuth = (event:React.MouseEvent<HTMLAnchorElement>) => {
+        if(window.confirm("로그아웃 하시겠습니까?")){
+            onDelAuth()
+            .then((message) => {
+                alert(message);
+            });
+        } else {
+            event.preventDefault();
+        }
+    }
+
     return (
         <BrowserRouter>
-            <button>종료</button>
             <div id="container">
+            {auth && <Link to="/" onClick={(evnet:React.MouseEvent<HTMLAnchorElement>) => delAuth(evnet)} className='sign-out'>로그아웃</Link>}
             <Routes>
                 <Route path="/" element={<Main/>}/>
                 {

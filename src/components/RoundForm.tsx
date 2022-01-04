@@ -60,7 +60,7 @@ function RoundForm(){
             if(id){
                 setStartDate(new Date(FormatDate(round[id].start)));
                 setEndDate(new Date(FormatDate(round[id].end)));
-                setTarget(round[id].target);
+                setTarget(Number(round[id].target));
                 setMemberState(round[id].member);
             }
         }
@@ -146,7 +146,7 @@ function RoundForm(){
                 <tbody>
                     <tr>
                         <td>
-                            <select defaultValue={target} onChange={(event:React.ChangeEvent<HTMLSelectElement>) => changeTarget(event)}>
+                            <select value={target} onChange={(event:React.ChangeEvent<HTMLSelectElement>) => changeTarget(event)}>
                                 <option value={0}>정령왕 선택</option>
                                 <option value={1}>바람 정령왕 킨</option>
                                 <option value={2}>땅 정령왕 디오네</option>
