@@ -11,18 +11,16 @@ function useAuth(){
     const dispatch = useDispatch();
 
     const onGetAuth = useCallback(async (code:string) => {
-        let auth = false;
-
         const ref = doc(db, "code", code);
         const snap = await getDoc(ref);
 
         if (snap.exists()) {
-            auth = true;
-        }
-        
-        dispatch(getAuth(auth));
+            dispatch(getAuth(true));
 
-        return auth;
+            return true;
+        } else {
+            return false;
+        }
 
     }, [dispatch]);
 
