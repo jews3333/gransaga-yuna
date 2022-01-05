@@ -1,4 +1,5 @@
 @import url('//fonts.googleapis.com/earlyaccess/notosanskr.css');
+@import './theme.scss';
 
 * {
     padding: 0;
@@ -7,14 +8,20 @@
 }
 
 body {
+    position: relative;
+    min-height:calc(100vh - 7em);
     font-size: 18px;
     font-weight: 400;
     font-style: normal;
     color:#333;
     font-family: 'Noto Sans KR', sans-serif;
-    padding:2vw;
     background: #f8f9fb;
     line-height: 1.3;
+    padding-bottom:4em;
+
+    @media all and (max-width:640px){
+        font-size:16px;
+    }
 }
 
 input,
@@ -24,6 +31,7 @@ textarea {
     font-family: inherit;
     border:1px solid #ccc;
     max-width:100%; 
+    border-radius: 0.3em;
 }
 
 input {
@@ -107,7 +115,7 @@ table {
     border-radius: 0.3em;
 
     &.delete {
-        background:#f44336;
+        background:$red;
     }
 
     &.add {
@@ -152,11 +160,11 @@ table {
     }
 
     &.update {
-        background:#2d71ca;
+        background:$blue;
     }
 
     &.submit {
-        background:#2d71ca;
+        background:$blue;
     }
 }
 
@@ -165,48 +173,7 @@ table {
 }
 
 .point {
-    color:#f44336;
-}
-
-#container {
-    width:100%;
-    max-width: 800px;
-    margin:0 auto;
-    background:#fff;
-    padding:3vw;
-    box-shadow: 0.25vw 0.25vw 0.75vw rgba(0,0,0,.1);
-    margin-bottom: 3em;
-
-    .content-title {
-        font-size:1.4em;
-        text-align:center;
-        margin-bottom:2em;
-        
-    }
-
-    .submit-layout {
-        text-align: center;
-        margin-top: 3em;
-
-        & > .button {
-            margin: 5px;
-        }
-    }
-
-    .sign-out {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        color: #fff;
-        background:#f44336;
-        text-align: center;
-        height:3em;
-        display:flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1;
-    }
+    color:$red;
 }
 
 .custom-datepicker-button {

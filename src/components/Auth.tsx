@@ -38,10 +38,10 @@ function Auth(){
 
     return (
         <div id="auth">
-            <p>길드 관리자님 어서오세요!</p>
+            <h2 className="content-title">관리자 로그인</h2>
             <form>
                 <input type="text" placeholder="PRIVATE CODE" onChange={(e:React.ChangeEvent<HTMLInputElement>) => onChangeCode(e)}/>
-                <button type="submit" onClick={(e:React.MouseEvent<HTMLButtonElement>) => onSubmit(e)}>Sign</button>
+                <button type="submit" className="button submit" onClick={(e:React.MouseEvent<HTMLButtonElement>) => onSubmit(e)}>로그인</button>
             </form>
         </div>
     )

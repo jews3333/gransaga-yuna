@@ -1,5 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Header from './components/Header';
+import Footer from './components/Footer';
 import Main from './pages/Main';
 import Admin from './pages/Admin';
 import Form from './pages/Form';
@@ -10,23 +12,12 @@ import useAuth from './hooks/useAuth';
 
 function Router(){
 
-    const { auth, onDelAuth } = useAuth();
-
-    const delAuth = (event:React.MouseEvent<HTMLAnchorElement>) => {
-        if(window.confirm("로그아웃 하시겠습니까?")){
-            onDelAuth()
-            .then((message) => {
-                alert(message);
-            });
-        } else {
-            event.preventDefault();
-        }
-    }
+    const { auth } = useAuth();
 
     return (
         <BrowserRouter>
+            <Header/>
             <div id="container">
-            {auth && <Link to="/" onClick={(evnet:React.MouseEvent<HTMLAnchorElement>) => delAuth(evnet)} className='sign-out'>로그아웃</Link>}
             <Routes>
                 <Route path="/" element={<Main/>}/>
                 {
@@ -40,6 +31,7 @@ function Router(){
                 <Route path="/*" element={<Error/>}/>
             </Routes>
             </div>
+            <Footer/>
         </BrowserRouter>
     )
 }

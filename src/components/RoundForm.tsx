@@ -93,12 +93,20 @@ function RoundForm(){
         }
     }
 
-    const changeStartDate = (date:Date) => {
-        setStartDate(date);
+    // const changeStartDate = (date:Date) => {
+    //     setStartDate(date);
+    // }
+
+    // const changeEndDate = (date:Date) => {
+    //     setEndDate(date);
+    // }
+
+    const changeStartDate = (event:React.ChangeEvent<HTMLInputElement>) => {
+        setStartDate(new Date(event.target.value));
     }
 
-    const changeEndDate = (date:Date) => {
-        setEndDate(date);
+    const changeEndDate = (event:React.ChangeEvent<HTMLInputElement>) => {
+        setEndDate(new Date(event.target.value));
     }
 
     const changeTarget = (event:React.ChangeEvent<HTMLSelectElement>) => {
@@ -157,9 +165,11 @@ function RoundForm(){
                             </select>
                         </td>
                         <td>
-                            <DatePicker selected={startDate} onChange={(date:Date) => changeStartDate(date)} customInput={<StartDateButton/>} dateFormat="yyyy-MM-dd" />
+                            <input type="date" value={FormatDate(Timestamp.fromDate(startDate))} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeStartDate(event)}/>
+                            <input type="date" value={FormatDate(Timestamp.fromDate(endDate))} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeEndDate(event)}/>
+                            {/* <DatePicker selected={startDate} onChange={(date:Date) => changeStartDate(date)} customInput={<StartDateButton/>} dateFormat="yyyy-MM-dd" />
                             <span> ~ </span>
-                            <DatePicker selected={endDate} onChange={(date:Date) => changeEndDate(date)} customInput={<EndDateButton/>} dateFormat="yyyy-MM-dd" />
+                            <DatePicker selected={endDate} onChange={(date:Date) => changeEndDate(date)} customInput={<EndDateButton/>} dateFormat="yyyy-MM-dd" /> */}
                         </td>
                     </tr>
                     <tr>
