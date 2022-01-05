@@ -14,7 +14,7 @@ function RoundDetail(){
     const navigation = useNavigate();
 
     useEffect(() => {
-        if(!round)  onGetRound();
+        if(!round) onGetRound();
     }, []);
 
     useEffect(() => {
@@ -22,6 +22,30 @@ function RoundDetail(){
             setDetail(round[id]);
         }
     }, [round, id]);
+
+    useEffect(() => {
+        if(detail){
+            let memberList = {};
+            let sortList = [];
+
+            sortList = Object.entries(detail.member);
+
+            sortList.sort((a:any, b:any) => {
+                return a[1].id < b[1].id ? -1 : a[1].id > b[1].id ? 1 : 0;
+            });
+
+            sortList.sort((a:any, b:any) => {
+                return a[1].class - b[1].class;
+            });
+
+            memberList = Object.fromEntries(sortList);
+
+            setDetail({
+                ...detail,
+                member : memberList
+            });
+        }
+    }, [detail]);
 
     const delRoundDetail = (event:React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();

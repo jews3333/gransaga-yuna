@@ -238,6 +238,12 @@
         }
     }
 
+    @media all and (max-width:950px){
+        input[type=date] + span {
+            display:block;
+        }
+    }
+
     .round-member-header {
         display:flex;
         min-height:3em;

@@ -37,7 +37,6 @@ function RoundForm(){
 
     useEffect(() => {
         if(!id && member){
-            
             let memberList = member;
 
             Object.keys(memberList).map((e,i) => {
@@ -58,10 +57,25 @@ function RoundForm(){
     useEffect(() => {
         if(round){
             if(id){
+                let memberList = {};
+                let sortList = [];
+
+                sortList = Object.entries(round[id].member);
+
+                sortList.sort((a:any, b:any) => {
+                    return a[1].id < b[1].id ? -1 : a[1].id > b[1].id ? 1 : 0;
+                });
+
+                sortList.sort((a:any, b:any) => {
+                    return a[1].class - b[1].class;
+                });
+
+                memberList = Object.fromEntries(sortList);
+
                 setStartDate(new Date(FormatDate(round[id].start)));
                 setEndDate(new Date(FormatDate(round[id].end)));
                 setTarget(Number(round[id].target));
-                setMemberState(round[id].member);
+                setMemberState(memberList);
             }
         }
     }, [round]);
@@ -166,6 +180,7 @@ function RoundForm(){
                         </td>
                         <td>
                             <input type="date" value={FormatDate(Timestamp.fromDate(startDate))} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeStartDate(event)}/>
+                            <span> ~ </span>
                             <input type="date" value={FormatDate(Timestamp.fromDate(endDate))} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeEndDate(event)}/>
                             {/* <DatePicker selected={startDate} onChange={(date:Date) => changeStartDate(date)} customInput={<StartDateButton/>} dateFormat="yyyy-MM-dd" />
                             <span> ~ </span>
