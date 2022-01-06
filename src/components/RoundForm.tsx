@@ -14,6 +14,7 @@ function RoundForm(){
     const [ startDate, setStartDate ] = useState<Date>(new Date());
     const [ endDate, setEndDate ] = useState<Date>(new Date());
     const [ target, setTarget ] = useState<number>(0);
+    const [ result, setResult ] = useState<number>(0);
     const [ memberState, setMemberState ] = useState<any>({});
 
     const { round, onGetRound, onSetRoundDetail } = useRound();
@@ -31,9 +32,10 @@ function RoundForm(){
             start: Timestamp.fromDate(startDate),
             end: Timestamp.fromDate(endDate),
             target: target,
+            result: result,
             member: memberState
         });
-    }, [startDate, endDate, target, memberState]);
+    }, [startDate, endDate, target, result, memberState]);
 
     useEffect(() => {
         if(!id && member){
@@ -75,6 +77,7 @@ function RoundForm(){
                 setStartDate(new Date(FormatDate(round[id].start)));
                 setEndDate(new Date(FormatDate(round[id].end)));
                 setTarget(Number(round[id].target));
+                setResult(Number(round[id].result));
                 setMemberState(memberList);
             }
         }
@@ -163,6 +166,7 @@ function RoundForm(){
                     <tr>
                         <th>정령왕</th>
                         <th>기간</th>
+                        <th>순위</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -186,12 +190,15 @@ function RoundForm(){
                             <span> ~ </span>
                             <DatePicker selected={endDate} onChange={(date:Date) => changeEndDate(date)} customInput={<EndDateButton/>} dateFormat="yyyy-MM-dd" /> */}
                         </td>
+                        <td>
+                            <input type="number" value={result} onChange={(event:React.ChangeEvent<HTMLInputElement>) => setResult(Number(event.target.value))} />
+                        </td>
                     </tr>
                     <tr>
-                        <th colSpan={2}>참여현황</th>
+                        <th colSpan={3}>참여현황</th>
                     </tr>
                     <tr>
-                        <td colSpan={2}>
+                        <td colSpan={3}>
                             {
                                 !id ? <p className='point'>참여자 목록은 자동으로 등록됩니다.</p>
                                 : memberState && 

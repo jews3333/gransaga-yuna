@@ -19,7 +19,7 @@ function Header(){
     return (
         <header id="header">
             <div className='inner'>
-                <h2>길드원/경쟁전 관리</h2>
+                <h1><Link to="/admin">길드원/경쟁전 관리</Link></h1>
                 <div>
                     {auth && <Link to="/" onClick={(evnet:React.MouseEvent<HTMLAnchorElement>) => delAuth(evnet)}>로그아웃</Link>}
                 </div>

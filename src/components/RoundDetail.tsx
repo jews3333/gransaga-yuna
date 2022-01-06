@@ -79,6 +79,7 @@ function RoundDetail(){
                     <tr>
                         <th>정령왕</th>
                         <th>기간</th>
+                        <th>순위</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -91,16 +92,17 @@ function RoundDetail(){
                                 <span> ~ </span>
                                 {FormatDate(detail.end)}
                             </td>
+                            <td>{detail.result != 0 ? detail.result : "-"}</td>
                         </tr>
                         
                     }
                     <tr>
-                        <th colSpan={2}>참여현황</th>
+                        <th colSpan={3}>참여현황</th>
                     </tr>
                     {
                         detail && 
                         <tr>
-                            <td colSpan={2}>
+                            <td colSpan={3}>
                                 <div className='round-member-header'>
                                     <span>번호</span>
                                     <span>이름</span>
