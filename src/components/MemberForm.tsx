@@ -10,7 +10,7 @@ function MemberForm(){
     const navigation = useNavigate();
 
     useEffect(() => {
-        if(!member) onGetMember();
+        onGetMember();
     }, []);
 
     useEffect(() => {
@@ -45,9 +45,11 @@ function MemberForm(){
                 if(!result) {
                     alert("코드가 일치하지 않습니다.");
                 } else {
+                    setData(null);
                     onDelMember(id)
                     .then((message) => {
                         alert(message);
+                        onGetMember();
                     })
                 }
             })
