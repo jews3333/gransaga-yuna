@@ -3,4 +3,11 @@ import * as actions from './actions';
 
 export type MemberAction = ActionType<typeof actions>;
 
-export type MemberState = any;
+export type MemberState = {
+    [id:string] : {
+        id : string,
+        class : number,
+        state?: boolean,
+        note?: string
+     }
+};

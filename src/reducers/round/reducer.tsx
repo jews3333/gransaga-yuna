@@ -2,7 +2,7 @@ import { createReducer } from 'typesafe-actions';
 import { GET_ROUND, GET_ROUND_DETAIL, SET_ROUND_DETAIL, DEL_ROUND_DETAIL } from './actions';
 import { RoundAction, RoundState } from './types';
 
-const initialState:RoundState = null;
+const initialState:RoundState = {};
 
 const round = createReducer<RoundState, RoundAction>(initialState, {
     [GET_ROUND] : (state, action) => (

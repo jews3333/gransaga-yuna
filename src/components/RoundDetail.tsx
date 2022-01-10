@@ -1,49 +1,69 @@
+import { Timestamp } from 'firebase/firestore';
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import useRound from '../hooks/useRound';
 import { FormatDate } from '../modules';
 
+import { RoundState } from '../reducers/round';
+
+type DetailType = {
+    target? : number,
+    start? : Timestamp,
+    end? : Timestamp,
+    result? : number,
+    member? : {
+        [id:string] : {
+            id : string,
+            class : number,
+            state : boolean,
+            note : string
+        }
+    }
+}
+
 function RoundDetail(){
     const { id } = useParams();
 
-    const [ detail, setDetail ] = useState<any>();
+    const [ detail, setDetail ] = useState<DetailType>({});
     const { onGetAuth } = useAuth();
     const { round, onGetRound, onDelRoundDetail } = useRound();
 
     const navigation = useNavigate();
 
     useEffect(() => {
-        if(!round) onGetRound();
+        if(Object.keys(round).length == 0) onGetRound();
     }, []);
 
     useEffect(() => {
-        if(id != undefined && round) {
+        if(id != undefined && Object.keys(round).length > 0) {
             setDetail(round[id]);
         }
     }, [round, id]);
 
     useEffect(() => {
-        if(detail){
+        if(Object.keys(detail).length > 0){
             let memberList = {};
             let sortList = [];
 
-            sortList = Object.entries(detail.member);
+            if(detail.member){
+                sortList = Object.entries(detail.member);
 
-            sortList.sort((a:any, b:any) => {
-                return a[1].id < b[1].id ? -1 : a[1].id > b[1].id ? 1 : 0;
-            });
+                sortList.sort((a:any, b:any) => {
+                    return a[1].id < b[1].id ? -1 : a[1].id > b[1].id ? 1 : 0;
+                });
 
-            sortList.sort((a:any, b:any) => {
-                return a[1].class - b[1].class;
-            });
+                sortList.sort((a:any, b:any) => {
+                    return a[1].class - b[1].class;
+                });
 
-            memberList = Object.fromEntries(sortList);
+                memberList = Object.fromEntries(sortList);
 
-            setDetail({
-                ...detail,
-                member : memberList
-            });
+                setDetail({
+                    ...detail,
+                    member : memberList
+                });
+            }
         }
     }, [detail]);
 
@@ -84,13 +104,13 @@ function RoundDetail(){
                 </thead>
                 <tbody>
                     {
-                        detail && 
+                        Object.keys(detail).length > 0 && 
                         <tr>
                             <td>{detail.target == 1 ? "바람 정령왕 킨" : detail.target == 2 ? "땅 정령왕 디오네" : detail.target == 3 ? "물 정령왕 마케이우" : detail.target == 4 ? "불 정령왕 라카테쉬" : detail.target == 5 ? "빛 정령왕 제네로" : detail.target == 6 ? "어둠 정령왕 타나룸" : "???"}</td>
                             <td>
-                                {FormatDate(detail.start)}
+                                {detail.start && FormatDate(detail.start)}
                                 <span> ~ </span>
-                                {FormatDate(detail.end)}
+                                {detail.end && FormatDate(detail.end)}
                             </td>
                             <td>{detail.result != 0 ? detail.result : "-"}</td>
                         </tr>
@@ -100,7 +120,7 @@ function RoundDetail(){
                         <th colSpan={3}>참여현황</th>
                     </tr>
                     {
-                        detail && 
+                         Object.keys(detail).length > 0 && 
                         <tr>
                             <td colSpan={3}>
                                 <div className='round-member-header'>
@@ -109,14 +129,18 @@ function RoundDetail(){
                                     <span>참여/미참여</span>
                                     <span>비고</span>
                                 </div>
-                                {Object.keys(detail.member).map((m,j) => {
-                                    return <div key={j} className='round-member-data'>
-                                        <span>{j+1}</span>
-                                        <span>{detail.member[m].id}</span>
-                                        <span className={`state${detail.member[m].state ? '1' : '2'}`}>{detail.member[m].state ? "참여" : "미참여"}</span>
-                                        <span>{detail.member[m].note}</span>
-                                    </div>
-                                })}
+                                {
+                                    detail.member
+                                    &&
+                                    Object.keys(detail.member).map((m,j) => {
+                                        return <div key={j} className='round-member-data'>
+                                            <span>{j+1}</span>
+                                            <span>{detail.member && detail.member[m].id}</span>
+                                            <span className={`state${detail.member && detail.member[m].state ? '1' : '2'}`}>{detail.member && detail.member[m].state ? "참여" : "미참여"}</span>
+                                            <span>{detail.member && detail.member[m].note}</span>
+                                        </div>
+                                    })
+                                }
                             </td>
                         </tr>
                     }

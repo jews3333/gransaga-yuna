@@ -51,7 +51,7 @@ function useMember(){
             id: id,
             class: clss
         })
-        .then((data:any) => {
+        .then((data) => {
             dispatch(addMember({
                 [data.id] : {
                     id: id,

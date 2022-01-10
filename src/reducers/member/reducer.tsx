@@ -2,7 +2,7 @@ import { createReducer } from 'typesafe-actions';
 import { GET_MEMBER, ADD_MEMBER, SET_MEMBER, DEL_MEMBER } from './actions';
 import { MemberAction, MemberState } from './types';
 
-const initialState:MemberState = null;
+const initialState:MemberState = {};
 
 const member = createReducer<MemberState, MemberAction>(initialState, {
     [GET_MEMBER] : (state, action) => (

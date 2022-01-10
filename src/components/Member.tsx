@@ -21,7 +21,7 @@ function Member(){
             </thead>
             <tbody>
                 {
-                    member && 
+                    Object.keys(member).length > 0 && 
                     Object.keys(member).map((e,i) => {
                         return <tr key={i}>
                             <td>{i+1}</td>

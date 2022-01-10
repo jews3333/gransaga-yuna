@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import useAuth from '../hooks/useAuth';
 import useMember from '../hooks/useMember';
 import { Link, useNavigate } from 'react-router-dom';
+import { MemberState } from '../reducers/member';
 
 function MemberForm(){
-    const [ data, setData ] = useState<any>(null);
+    const [ data, setData ] = useState<MemberState>({});
     const { onGetAuth } = useAuth();
     const { member, onGetMember, onSetMember, onAddMember, onDelMember } = useMember();
     const navigation = useNavigate();
@@ -14,7 +15,7 @@ function MemberForm(){
     }, []);
 
     useEffect(() => {
-        if(member){
+        if(Object.keys(member).length > 0){
             setData(member);
         }
     }, [member]);
@@ -45,7 +46,7 @@ function MemberForm(){
                 if(!result) {
                     alert("코드가 일치하지 않습니다.");
                 } else {
-                    setData(null);
+                    setData({});
                     onDelMember(id)
                     .then((message) => {
                         alert(message);
@@ -73,7 +74,7 @@ function MemberForm(){
             ...data,
             [id] : {
                 ...data[id],
-                class : event.target.value
+                class : Number(event.target.value)
             }
         });
     }
@@ -92,7 +93,7 @@ function MemberForm(){
                 </thead>
                 <tbody>
                     {
-                        data && 
+                        Object.keys(data).length > 0 && 
                         Object.keys(data).map((e,i) => {
                             return <tr key={i}>
                                 <td>{i+1}</td>

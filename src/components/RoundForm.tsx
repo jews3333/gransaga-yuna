@@ -2,20 +2,30 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import useRound from '../hooks/useRound';
 import useMember from '../hooks/useMember';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
 import { Timestamp } from 'firebase/firestore';
 import { FormatDate } from '../modules';
+import { RoundState } from '../reducers/round';
+import { MemberState } from '../reducers/member';
+
+type DataType = {
+    target? : number,
+    start? : Timestamp,
+    end? : Timestamp,
+    result? : number,
+    member? : MemberState
+}
 
 function RoundForm(){
     const navigation = useNavigate();
 
-    const [ data, setData ] = useState<any>(null);
+    const [ data, setData ] = useState<DataType>({});
     const [ startDate, setStartDate ] = useState<Date>(new Date());
     const [ endDate, setEndDate ] = useState<Date>(new Date());
     const [ target, setTarget ] = useState<number>(0);
     const [ result, setResult ] = useState<number>(0);
-    const [ memberState, setMemberState ] = useState<any>({});
+    const [ memberState, setMemberState ] = useState<MemberState>({});
 
     const { round, onGetRound, onSetRoundDetail } = useRound();
     const { member, onGetMember } = useMember();
@@ -23,22 +33,22 @@ function RoundForm(){
     const { path, id } = useParams();
 
     useEffect(() => {
-        if(!round) onGetRound();
-        if(!member) onGetMember();
+        if(Object.keys(round).length == 0) onGetRound();
+        if(Object.keys(member).length == 0) onGetMember();
     }, []);
 
     useEffect(() => {
         setData({
+            target: target,
             start: Timestamp.fromDate(startDate),
             end: Timestamp.fromDate(endDate),
-            target: target,
             result: result,
             member: memberState
         });
     }, [startDate, endDate, target, result, memberState]);
 
     useEffect(() => {
-        if(!id && member){
+        if(!id && Object.keys(member).length > 0){
             let memberList = member;
 
             Object.keys(memberList).map((e,i) => {
@@ -57,7 +67,7 @@ function RoundForm(){
     }, [member]);
 
     useEffect(() => {
-        if(round){
+        if(Object.keys(round).length > 0){
             if(id){
                 let memberList = {};
                 let sortList = [];
@@ -83,7 +93,7 @@ function RoundForm(){
         }
     }, [round]);
 
-    const setRoundDetail = (event:React.MouseEvent<HTMLButtonElement>, data:any) => {
+    const setRoundDetail = (event:React.MouseEvent<HTMLButtonElement>, data:DataType) => {
         event.preventDefault();
 
         if(!target){
@@ -201,7 +211,7 @@ function RoundForm(){
                         <td colSpan={3}>
                             {
                                 !id ? <p className='point'>참여자 목록은 자동으로 등록됩니다.</p>
-                                : memberState && 
+                                : Object.keys(memberState).length > 0 && 
                                 <>
                                     <div className='round-member-header'>
                                         <span>번호</span>
