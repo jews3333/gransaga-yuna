@@ -14,10 +14,12 @@ type DetailType = {
     result? : number,
     member? : {
         [id:string] : {
-            id : string,
-            class : number,
-            state : boolean,
-            note : string
+            id: string,
+            class: number,
+            state?: boolean,
+            note?: string,
+            single?: number,
+            party?: number
         }
     }
 }
@@ -127,6 +129,8 @@ function RoundDetail(){
                                     <span>번호</span>
                                     <span>이름</span>
                                     <span>참여/미참여</span>
+                                    <span>개인전</span>
+                                    <span>파티전</span>
                                     <span>비고</span>
                                 </div>
                                 {
@@ -134,10 +138,17 @@ function RoundDetail(){
                                     &&
                                     Object.keys(detail.member).map((m,j) => {
                                         return <div key={j} className='round-member-data'>
-                                            <span>{j+1}</span>
-                                            <span>{detail.member && detail.member[m].id}</span>
-                                            <span className={`state${detail.member && detail.member[m].state ? '1' : '2'}`}>{detail.member && detail.member[m].state ? "참여" : "미참여"}</span>
-                                            <span>{detail.member && detail.member[m].note}</span>
+                                            {
+                                                detail.member &&
+                                                <>
+                                                    <span>{j+1}</span>
+                                                    <span>{detail.member[m].id}</span>
+                                                    <span className={`state${detail.member[m].state ? '1' : '2'}`}>{detail.member[m].state ? "참여" : "미참여"}</span>
+                                                    <span>{detail.member[m].single}</span>
+                                                    <span>{detail.member[m].party}</span>
+                                                    <span>{detail.member[m].note}</span>
+                                                </>
+                                            }
                                         </div>
                                     })
                                 }

@@ -8,6 +8,8 @@ export type MemberState = {
         id : string,
         class : number,
         state?: boolean,
-        note?: string
+        note?: string,
+        single?: number,
+        party?: number
      }
 };

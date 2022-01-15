@@ -2,8 +2,6 @@ import React, { useState, useEffect, forwardRef } from 'react';
 import useRound from '../hooks/useRound';
 import useMember from '../hooks/useMember';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-// import DatePicker from 'react-datepicker';
-// import 'react-datepicker/dist/react-datepicker.css';
 import { Timestamp } from 'firebase/firestore';
 import { FormatDate } from '../modules';
 import { RoundState } from '../reducers/round';
@@ -57,7 +55,9 @@ function RoundForm(){
                     [e] : {
                         ...memberList[e],
                         state: false,
-                        note: ""
+                        note: "",
+                        single: 0,
+                        party: 0
                     }
                 }
             });
@@ -120,14 +120,6 @@ function RoundForm(){
         }
     }
 
-    // const changeStartDate = (date:Date) => {
-    //     setStartDate(date);
-    // }
-
-    // const changeEndDate = (date:Date) => {
-    //     setEndDate(date);
-    // }
-
     const changeStartDate = (event:React.ChangeEvent<HTMLInputElement>) => {
         setStartDate(new Date(event.target.value));
     }
@@ -157,16 +149,36 @@ function RoundForm(){
                 ...memberState[mber],
                 note: event.target.value
             }
-        })
+        });
     }
 
-    const StartDateButton = forwardRef(({ value, onClick }:any, ref:any) => {
-        return <button className='custom-datepicker-button' onClick={onClick} ref={ref}>{value}</button>
-    });
+    const changeSingle = (event:React.ChangeEvent<HTMLInputElement>, mber:string) => {
+        if(Number(event.target.value) <= Number(event.target.max)){
+            setMemberState({
+                ...memberState,
+                [mber]: {
+                    ...memberState[mber],
+                    single: Number(event.target.value)
+                }
+            });
+        } else {
+            alert(`${event.target.max} 이상 입력이 불가능합니다.`);
+        }
+    }
 
-    const EndDateButton = forwardRef(({ value, onClick }:any, ref:any) => {
-        return <button className='custom-datepicker-button' onClick={onClick} ref={ref}>{value}</button>
-    });
+    const changeParty = (event:React.ChangeEvent<HTMLInputElement>, mber:string) => {
+        if(Number(event.target.value) <= Number(event.target.max)){
+            setMemberState({
+                ...memberState,
+                [mber]: {
+                    ...memberState[mber],
+                    party: Number(event.target.value)
+                }
+            });
+        } else {
+            alert(`${event.target.max} 이상 입력이 불가능합니다.`);
+        }
+    }
 
     return (
         <>
@@ -196,9 +208,6 @@ function RoundForm(){
                             <input type="date" value={FormatDate(Timestamp.fromDate(startDate))} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeStartDate(event)}/>
                             <span> ~ </span>
                             <input type="date" value={FormatDate(Timestamp.fromDate(endDate))} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeEndDate(event)}/>
-                            {/* <DatePicker selected={startDate} onChange={(date:Date) => changeStartDate(date)} customInput={<StartDateButton/>} dateFormat="yyyy-MM-dd" />
-                            <span> ~ </span>
-                            <DatePicker selected={endDate} onChange={(date:Date) => changeEndDate(date)} customInput={<EndDateButton/>} dateFormat="yyyy-MM-dd" /> */}
                         </td>
                         <td>
                             <input type="number" value={result} onChange={(event:React.ChangeEvent<HTMLInputElement>) => setResult(Number(event.target.value))} />
@@ -217,6 +226,8 @@ function RoundForm(){
                                         <span>번호</span>
                                         <span>이름</span>
                                         <span>참여/미참여</span>
+                                        <span>개인전</span>
+                                        <span>파티전</span>
                                         <span>비고</span>
                                     </div>
                                     {Object.keys(memberState).map((e,i) => {
@@ -228,7 +239,13 @@ function RoundForm(){
                                                 <label htmlFor={`state${i+1}`}>{memberState[e].state ? "참여" : "미참여"}</label>
                                             </span>
                                             <span>
-                                                <input type="text" defaultValue={memberState[e].note} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeNote(event,e)}/>
+                                                <input type="number" defaultValue={0} value={memberState[e].single} max={7} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeSingle(event,e)}/>
+                                            </span>
+                                            <span>
+                                                <input type="number" defaultValue={0} value={memberState[e].party} max={3} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeParty(event,e)}/>
+                                            </span>
+                                            <span>
+                                                <input type="text" value={memberState[e].note} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeNote(event,e)}/>
                                             </span>
                                         </div>
                                     })}
