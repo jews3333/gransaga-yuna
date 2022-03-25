@@ -3,7 +3,7 @@ import { RootState } from '../reducers';
 import { useCallback } from 'react';
 import { getRound, setRoundDetail, delRoundDetail } from '../reducers/round';
 
-import { collection, query, doc, orderBy, getDocs, addDoc, setDoc, deleteDoc } from 'firebase/firestore';
+import { collection, query, doc, orderBy, getDocs, addDoc, setDoc, deleteDoc, where } from 'firebase/firestore';
 import { db } from '../firebase/init';
 
 function useRound(){
@@ -13,7 +13,7 @@ function useRound(){
     const onGetRound = useCallback(async () => {
         let list = {};
 
-        const qr = query(collection(db, 'round'), orderBy('start'));
+        const qr = query(collection(db, 'round'), orderBy('start','desc'));
         const querySnapshot = await getDocs(qr);
 
         querySnapshot.forEach((doc) => {

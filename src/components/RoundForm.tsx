@@ -1,7 +1,7 @@
 import React, { useState, useEffect, forwardRef } from 'react';
 import useRound from '../hooks/useRound';
 import useMember from '../hooks/useMember';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams, useLocation } from 'react-router-dom';
 import { Timestamp } from 'firebase/firestore';
 import { FormatDate } from '../modules';
 import { RoundState } from '../reducers/round';
@@ -20,7 +20,7 @@ function RoundForm(){
 
     const [ data, setData ] = useState<DataType>({});
     const [ startDate, setStartDate ] = useState<Date>(new Date());
-    const [ endDate, setEndDate ] = useState<Date>(new Date());
+    const [ endDate, setEndDate ] = useState<Date>(new Date(startDate.getFullYear(),startDate.getMonth(),startDate.getDate()+6));
     const [ target, setTarget ] = useState<number>(0);
     const [ result, setResult ] = useState<number>(0);
     const [ memberState, setMemberState ] = useState<MemberState>({});
@@ -115,7 +115,7 @@ function RoundForm(){
             onSetRoundDetail(data, id)
             .then((message) => {
                 alert(message);
-                navigation("/admin");
+                navigation("/admin/round");
             });
         }
     }
@@ -158,7 +158,8 @@ function RoundForm(){
                 ...memberState,
                 [mber]: {
                     ...memberState[mber],
-                    single: Number(event.target.value)
+                    single: Number(event.target.value),
+                    state: (Number(event.target.value) === 7 && memberState[mber].party === 3) ? true : false
                 }
             });
         } else {
@@ -172,7 +173,8 @@ function RoundForm(){
                 ...memberState,
                 [mber]: {
                     ...memberState[mber],
-                    party: Number(event.target.value)
+                    party: Number(event.target.value),
+                    state: (memberState[mber].single === 7 && Number(event.target.value) === 3) ? true : false
                 }
             });
         } else {
@@ -235,8 +237,9 @@ function RoundForm(){
                                             <span>{i+1}</span>
                                             <span>{memberState[e].id}</span>
                                             <span>
-                                                <input type="checkbox" id={`state${i+1}`} defaultChecked={memberState[e].state} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeState(event, e)}/>
-                                                <label htmlFor={`state${i+1}`}>{memberState[e].state ? "참여" : "미참여"}</label>
+                                                {/* <input type="checkbox" id={`state${i+1}`} defaultChecked={memberState[e].state} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeState(event, e)}/> */}
+                                                {/* <label htmlFor={`state${i+1}`}>{memberState[e].state ? "참여" : "미참여"}</label> */}
+                                                <span className={`state${memberState[e].state ? '1' : '2'}`}>{memberState[e].state ? "완료" : "미참여"}</span>
                                             </span>
                                             <span>
                                                 <input type="number" defaultValue={0} value={memberState[e].single} max={7} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeSingle(event,e)}/>
@@ -257,7 +260,7 @@ function RoundForm(){
             </table>
             <div className='submit-layout'>
                 <button type="submit" onClick={(event:React.MouseEvent<HTMLButtonElement>) => setRoundDetail(event, data)} className='button submit'>저장</button>
-                <Link to="/admin" className='button cancel'>취소</Link>
+                <button className='button cancel' onClick={() => navigation(-1)}>취소</button>
             </div>
         </>
     )

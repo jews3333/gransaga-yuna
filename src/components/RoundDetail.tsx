@@ -143,7 +143,7 @@ function RoundDetail(){
                                                 <>
                                                     <span>{j+1}</span>
                                                     <span>{detail.member[m].id}</span>
-                                                    <span className={`state${detail.member[m].state ? '1' : '2'}`}>{detail.member[m].state ? "참여" : "미참여"}</span>
+                                                    <span className={`state${detail.member[m].state ? '1' : '2'}`}>{detail.member[m].state ? "완료" : "미참여"}</span>
                                                     <span>{detail.member[m].single}</span>
                                                     <span>{detail.member[m].party}</span>
                                                     <span>{detail.member[m].note}</span>
@@ -158,7 +158,7 @@ function RoundDetail(){
                 </tbody>
             </table>
             <div className='submit-layout'>
-                <Link to={`/admin/form/round/${id}`} className='button submit'>수정</Link>
+                <Link to={`/admin/round/form/${id}`} className='button submit'>수정</Link>
                 <button className='button delete' onClick={(event:React.MouseEvent<HTMLButtonElement>) => delRoundDetail(event)}>삭제</button>
             </div>
         </>

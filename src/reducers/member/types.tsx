@@ -7,6 +7,7 @@ export type MemberState = {
     [id:string] : {
         id : string,
         class : number,
+        eval? : string,
         state?: boolean,
         note?: string,
         single?: number,

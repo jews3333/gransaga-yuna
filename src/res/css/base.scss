@@ -126,6 +126,22 @@ table {
     }
 }
 
+@for $i from 1 through 100 {
+    .mt-#{$i} {
+        margin-bottom: #{$i}px;
+    }
+    .mb-#{$i} {
+        margin-bottom: #{$i}px;
+    }
+    .ml-#{$i} {
+        margin-bottom: #{$i}px;
+    }
+    .mr-#{$i} {
+        margin-bottom: #{$i}px;
+    }
+}
+
+
 .button {
     position: relative;
     display:inline-flex;
@@ -133,10 +149,10 @@ table {
     align-items: center;
     font-size:0.85em;
     height: 2.5em;
-    padding: 0.1em 1em 0;
+    padding: 0.1em 1.5em 0;
     background:#999;
     color:#fff;
-    border-radius: 0.3em;
+    border-radius: 1.25em;
 
     &.delete {
         background:$red;

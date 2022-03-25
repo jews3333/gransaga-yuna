@@ -31,7 +31,7 @@ function MemberForm(){
         onSetMember(data)
         .then((message) => {
             alert(message);
-            navigation("/admin");
+            navigation("/admin/member");
         })
         .catch(err => alert("저장을 실패하였습니다."));
     }
@@ -79,16 +79,27 @@ function MemberForm(){
         });
     }
 
+    const changeEval = (event:React.ChangeEvent<HTMLInputElement>, id:string) => {
+        setData({
+            ...data,
+            [id] : {
+                ...data[id],
+                eval : event.target.value
+            }
+        });
+    }
+
     return (
-        <form>
+        <>
             <table id="member-list">
                 <caption></caption>
                 <thead>
                     <tr>
-                        <th scope='col'>번호</th>
-                        <th scope='col'>이름</th>
-                        <th scope='col'>등급</th>
-                        <th scope='col'>관리</th>
+                        <th>번호</th>
+                        <th>이름</th>
+                        <th>등급</th>
+                        <th>평가</th>
+                        <th>관리</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,13 +108,18 @@ function MemberForm(){
                         Object.keys(data).map((e,i) => {
                             return <tr key={i}>
                                 <td>{i+1}</td>
-                                <td><input type="test" defaultValue={data[e].id} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeId(event, e)}/></td>
+                                <td>
+                                    <input type="text" defaultValue={data[e].id} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeId(event, e)}/>
+                                    </td>
                                 <td>
                                     <select defaultValue={data[e].class} onChange={(event:React.ChangeEvent<HTMLSelectElement>) => changeClass(event, e)}>
                                         <option value={1}>길드마스터</option>
                                         <option value={2}>서브마스터</option>
                                         <option value={3}>길드멤버</option>
                                     </select>
+                                </td>
+                                <td>
+                                    <input type="text" defaultValue={data[e].eval} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeEval(event, e)}/>
                                 </td>
                                 <td>
                                     <button onClick={(event:React.MouseEvent<HTMLButtonElement>) => delMember(event, e)} className='button delete'>삭제</button>
@@ -114,7 +130,7 @@ function MemberForm(){
                 </tbody>
                 <tfoot>
                     <tr>
-                        <td colSpan={4}>
+                        <td colSpan={5}>
                             <button onClick={addMember} className='button add'>추가</button>
                         </td>
                     </tr>
@@ -122,9 +138,9 @@ function MemberForm(){
             </table>
             <div className='submit-layout'>
                 <button type="submit" onClick={setMember} className='button submit'>저장</button>
-                <Link to="/admin" className='button cancel'>취소</Link>
+                <button className='button cancel' onClick={() => navigation(-1)}>취소</button>
             </div>
-        </form>
+        </>
     )
 }
 

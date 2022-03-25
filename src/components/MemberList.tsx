@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import useMember from '../hooks/useMember';
+import { FaChessKing, FaChessRook, FaChessPawn } from "react-icons/fa";
 
-function Member(){
+function MemberList(){
 
     const { member, onGetMember } = useMember();
 
@@ -17,6 +18,7 @@ function Member(){
                     <th>번호</th>
                     <th>이름</th>
                     <th>등급</th>
+                    <th>평가</th>
                 </tr>
             </thead>
             <tbody>
@@ -26,7 +28,8 @@ function Member(){
                         return <tr key={i}>
                             <td>{i+1}</td>
                             <td>{member[e].id}</td>
-                            <td>{member[e].class == 1 ? "길드마스터" : member[e].class == 2 ? "서브마스터" : "길드멤버"}</td>
+                            <td>{member[e].class == 1 ? <FaChessKing size={20} fill={`#f5d700`}/> : member[e].class == 2 ? <FaChessRook size={20} fill={`#8b8b8b`}/> : <FaChessPawn size={20} fill={`#484848`}/>}</td>
+                            <td>{member[e].eval}</td>
                         </tr>
                     })
                 }
@@ -35,4 +38,4 @@ function Member(){
     )
 }
 
-export default Member;
+export default MemberList;
