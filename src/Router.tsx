@@ -20,7 +20,7 @@ function Router(){
         <BrowserRouter>
             <Header/>
             <div id="container">
-                <Navigation/>
+                {auth && <Navigation/>}
                 <Routes>
                     <Route path="/" element={<Main/>}/>
                     {
