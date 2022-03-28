@@ -4,6 +4,7 @@ import storage from 'redux-persist/lib/storage';
 import auth from './auth';
 import member from './member';
 import round from './round';
+import black from './black';
 
 const persistConfig = {
     key: 'root',
@@ -11,14 +12,16 @@ const persistConfig = {
     whitelist: [
         'auth',
         'member',
-        'round'
+        'round',
+        'black'
     ]
 }
 
 const rootReducer = combineReducers({
     auth,
     member,
-    round
+    round,
+    black
 });
 
 export default persistReducer<any, any>( persistConfig, rootReducer );

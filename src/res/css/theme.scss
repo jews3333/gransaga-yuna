@@ -1,2 +1,12 @@
 $red : #f44336;
 $blue : #2d71ca;
+
+@mixin button {
+    font-size: initial;
+    font-family: inherit;
+    border-radius: 0;
+    border:0;
+    background: none;
+    color:initial;
+    cursor: pointer;
+}

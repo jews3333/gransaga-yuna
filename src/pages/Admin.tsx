@@ -6,6 +6,7 @@ import RoundList from "../components/RoundList";
 function Admin(){
     return (
         <div id="admin">
+            <p>길드원과 정령왕, 블랙리스트를 관리해보세요!</p>
             {/* <h2 className="content-title">길드원/정령왕의 시련 관리</h2> */}
             {/* <div className="list">
                 <dl>
