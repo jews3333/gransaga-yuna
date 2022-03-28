@@ -11,6 +11,9 @@ service cloud.firestore {
     match /round/{round} {
     	allow read, write, update, delete : if true;
     }
+    match /black/{black} {
+    	allow read, write, update, delete : if true;
+    }
     match /{document=**} {
       allow read, write, create, update, delete: if false;
     }
