@@ -25,6 +25,30 @@
     url('../font/GmarketSansBold.otf') format("opentype");
 }
 
+@font-face {
+    font-family: "Omni";
+    font-style: normal;
+    font-weight: 100;
+    src: url('../font/OmniLight.woff') format("woff"),
+    url('../font/OmniLight.ttf') format("truetype");
+}
+
+@font-face {
+    font-family: "Omni";
+    font-style: normal;
+    font-weight: 400;
+    src: url('../font/OmniMedium.woff') format("woff"),
+    url('../font/OmniMedium.ttf') format("truetype");
+}
+
+@font-face {
+    font-family: "Omni";
+    font-style: normal;
+    font-weight: 700;
+    src: url('../font/OmniBold.woff') format("woff"),
+    url('../font/OmniBold.ttf') format("truetype");
+}
+
 * {
     padding: 0;
     margin: 0;
@@ -87,6 +111,11 @@ button {
     @include button;
 }
 
+img {
+    max-width: 100%;
+    vertical-align: top;
+}
+
 ul,
 li,
 ol {
@@ -123,16 +152,16 @@ table {
 
 @for $i from 1 through 100 {
     .mt-#{$i} {
-        margin-bottom: #{$i}px;
+        margin-top: #{$i}px;
     }
     .mb-#{$i} {
         margin-bottom: #{$i}px;
     }
     .ml-#{$i} {
-        margin-bottom: #{$i}px;
+        margin-left: #{$i}px;
     }
     .mr-#{$i} {
-        margin-bottom: #{$i}px;
+        margin-right: #{$i}px;
     }
 }
 

@@ -5,6 +5,7 @@ import auth from './auth';
 import member from './member';
 import round from './round';
 import black from './black';
+import banner from './banner';
 
 const persistConfig = {
     key: 'root',
@@ -13,7 +14,8 @@ const persistConfig = {
         'auth',
         'member',
         'round',
-        'black'
+        'black',
+        'banner'
     ]
 }
 
@@ -21,7 +23,8 @@ const rootReducer = combineReducers({
     auth,
     member,
     round,
-    black
+    black,
+    banner
 });
 
 export default persistReducer<any, any>( persistConfig, rootReducer );
