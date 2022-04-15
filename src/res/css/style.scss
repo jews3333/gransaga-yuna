@@ -467,7 +467,8 @@
     width: 1060px;
     margin: 0 auto;
     padding: 600px 100px 100px;
-    background: url(../img/banner_top.jpg) no-repeat center top / 100%, url(../img/banner_bottom.png) no-repeat center bottom / 100%;
+    background: url(../img/banner_top.png) no-repeat center top / 100%, url(../img/banner_bottom.png) no-repeat center bottom / 100%;
+    background-color:#f4f4f4;
 
     input {
         text-align: center;
@@ -478,7 +479,7 @@
         padding:40px;
         background:#fff;
         text-align: center;
-        box-shadow: 0 0 15px rgba(0,0,0,0.15);
+        // box-shadow: 0 0 15px rgba(0,0,0,0.15); //html2canvas에서 처리 불가
     }
 
     .view-title {
