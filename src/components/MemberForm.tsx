@@ -60,33 +60,33 @@ function MemberForm(){
     }
 
     const changeId = (event:React.ChangeEvent<HTMLInputElement>, id:string) => {
-        setData({
-            ...data,
+        setData(prevState => ({
+            ...prevState,
             [id] : {
-                ...data[id],
+                ...prevState[id],
                 id : event.target.value
             }
-        });
+        }));
     }
 
     const changeClass = (event:React.ChangeEvent<HTMLSelectElement>, id:string) => {
-        setData({
-            ...data,
+        setData(prevState => ({
+            ...prevState,
             [id] : {
-                ...data[id],
+                ...prevState[id],
                 class : Number(event.target.value)
             }
-        });
+        }));
     }
 
     const changeEval = (event:React.ChangeEvent<HTMLInputElement>, id:string) => {
-        setData({
-            ...data,
+        setData(prevState => ({
+            ...prevState,
             [id] : {
-                ...data[id],
+                ...prevState[id],
                 eval : event.target.value
             }
-        });
+        }));
     }
 
     return (

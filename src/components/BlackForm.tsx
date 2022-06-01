@@ -60,33 +60,33 @@ function BlackForm(){
     }
 
     const changeId = (event:React.ChangeEvent<HTMLInputElement>, id:string) => {
-        setData({
-            ...data,
+        setData(prevState => ({
+            ...prevState,
             [id] : {
-                ...data[id],
+                ...prevState[id],
                 id : event.target.value
             }
-        });
+        }));
     }
 
     const changeCause = (event:React.ChangeEvent<HTMLInputElement>, id:string) => {
-        setData({
-            ...data,
+        setData(prevState => ({
+            ...prevState,
             [id] : {
-                ...data[id],
+                ...prevState[id],
                 cause : event.target.value
             }
-        });
+        }));
     }
 
     const changeProfile = (event:React.ChangeEvent<HTMLInputElement>, id:string) => {
-        setData({
-            ...data,
+        setData(prevState => ({
+            ...prevState,
             [id] : {
-                ...data[id],
+                ...prevState[id],
                 profile : event.target.value
             }
-        });
+        }));
     }
 
     return (

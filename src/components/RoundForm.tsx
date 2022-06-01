@@ -133,35 +133,35 @@ function RoundForm(){
     }
 
     const changeState = (event:React.ChangeEvent<HTMLInputElement>, mber:string) => {
-        setMemberState({
-            ...memberState,
+        setMemberState(prevState => ({
+            ...prevState,
             [mber]: {
-                ...memberState[mber],
+                ...prevState[mber],
                 state: event.target.checked
             }
-        });
+        }));
     }
 
     const changeNote = (event:React.ChangeEvent<HTMLInputElement>, mber:string) => {
-        setMemberState({
-            ...memberState,
+        setMemberState(prevState => ({
+            ...prevState,
             [mber]: {
-                ...memberState[mber],
+                ...prevState[mber],
                 note: event.target.value
             }
-        });
+        }));
     }
 
     const changeSingle = (event:React.ChangeEvent<HTMLInputElement>, mber:string) => {
         if(Number(event.target.value) <= Number(event.target.max)){
-            setMemberState({
-                ...memberState,
+            setMemberState(prevState => ({
+                ...prevState,
                 [mber]: {
-                    ...memberState[mber],
+                    ...prevState[mber],
                     single: Number(event.target.value),
-                    state: (Number(event.target.value) === 7 && memberState[mber].party === 3) ? true : false
+                    state: (Number(event.target.value) === 7 && prevState[mber].party === 3) ? true : false
                 }
-            });
+            }));
         } else {
             alert(`${event.target.max} 이상 입력이 불가능합니다.`);
         }
@@ -169,14 +169,14 @@ function RoundForm(){
 
     const changeParty = (event:React.ChangeEvent<HTMLInputElement>, mber:string) => {
         if(Number(event.target.value) <= Number(event.target.max)){
-            setMemberState({
-                ...memberState,
+            setMemberState(prevState => ({
+                ...prevState,
                 [mber]: {
-                    ...memberState[mber],
+                    ...prevState[mber],
                     party: Number(event.target.value),
-                    state: (memberState[mber].single === 7 && Number(event.target.value) === 3) ? true : false
+                    state: (prevState[mber].single === 7 && Number(event.target.value) === 3) ? true : false
                 }
-            });
+            }));
         } else {
             alert(`${event.target.max} 이상 입력이 불가능합니다.`);
         }

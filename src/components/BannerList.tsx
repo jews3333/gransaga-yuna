@@ -22,6 +22,8 @@ function BannerList(){
     const { member, onGetMember } = useMember();
     const { banner, onGetBanner } = useBanner();
 
+    const [ status, setStatus ] = useState<boolean>(false);
+
     const [ txt1, setTxt1 ] = useState<string | undefined>("");
     const [ txt2, setTxt2 ] = useState<string | undefined>("");
 
@@ -67,14 +69,16 @@ function BannerList(){
                     }
                 });
             }
+
+            setStatus(true);
         }
     }, [banner]);
     
     useEffect(() => {
-        if(banner && member){
+        if(status){
             htmlToImage();
         }
-    }, [banner, member]);
+    }, [status]);
 
     const bannerRef = useRef<any>();
 
