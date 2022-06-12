@@ -153,33 +153,33 @@ function RoundForm(){
     }
 
     const changeSingle = (event:React.ChangeEvent<HTMLInputElement>, mber:string) => {
-        if(Number(event.target.value) <= Number(event.target.max)){
+        // if(Number(event.target.value) <= Number(event.target.max)){
             setMemberState(prevState => ({
                 ...prevState,
                 [mber]: {
                     ...prevState[mber],
-                    single: Number(event.target.value),
+                    single: event.target.checked ? Number(event.target.value) : 0,
                     state: (Number(event.target.value) === 7 && prevState[mber].party === 3) ? true : false
                 }
             }));
-        } else {
-            alert(`${event.target.max} 이상 입력이 불가능합니다.`);
-        }
+        // } else {
+        //     alert(`${event.target.max} 이상 입력이 불가능합니다.`);
+        // }
     }
 
     const changeParty = (event:React.ChangeEvent<HTMLInputElement>, mber:string) => {
-        if(Number(event.target.value) <= Number(event.target.max)){
+        // if(Number(event.target.value) <= Number(event.target.max)){
             setMemberState(prevState => ({
                 ...prevState,
                 [mber]: {
                     ...prevState[mber],
-                    party: Number(event.target.value),
+                    party: event.target.checked ? Number(event.target.value) : 0,
                     state: (prevState[mber].single === 7 && Number(event.target.value) === 3) ? true : false
                 }
             }));
-        } else {
-            alert(`${event.target.max} 이상 입력이 불가능합니다.`);
-        }
+        // } else {
+        //     alert(`${event.target.max} 이상 입력이 불가능합니다.`);
+        // }
     }
 
     return (
@@ -242,10 +242,12 @@ function RoundForm(){
                                                 <span className={`state${memberState[e].state ? '1' : '2'}`}>{memberState[e].state ? "완료" : "미참여"}</span>
                                             </span>
                                             <span>
-                                                <input type="number" defaultValue={0} value={memberState[e].single} max={7} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeSingle(event,e)}/>
+                                                {/* <input type="number" defaultValue={0} value={memberState[e].single} max={7} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeSingle(event,e)}/> */}
+                                                <input type="checkbox" value={7} checked={memberState[e].single === 7 ? true : false} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeSingle(event,e)}/>
                                             </span>
                                             <span>
-                                                <input type="number" defaultValue={0} value={memberState[e].party} max={3} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeParty(event,e)}/>
+                                                {/* <input type="number" defaultValue={0} value={memberState[e].party} max={3} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeParty(event,e)}/> */}
+                                                <input type="checkbox" value={3} checked={memberState[e].party === 3 ? true : false} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeParty(event,e)}/>
                                             </span>
                                             <span>
                                                 <input type="text" value={memberState[e].note} onChange={(event:React.ChangeEvent<HTMLInputElement>) => changeNote(event,e)}/>

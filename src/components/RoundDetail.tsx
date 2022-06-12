@@ -144,8 +144,8 @@ function RoundDetail(){
                                                     <span>{j+1}</span>
                                                     <span>{detail.member[m].id}</span>
                                                     <span className={`state${detail.member[m].state ? '1' : '2'}`}>{detail.member[m].state ? "완료" : "미참여"}</span>
-                                                    <span>{detail.member[m].single}</span>
-                                                    <span>{detail.member[m].party}</span>
+                                                    <span className={`state${detail.member[m].single ? '1' : '2'}`}>{detail.member[m].single ? '완료' : '미참여'}</span>
+                                                    <span className={`state${detail.member[m].party ? '1' : '2'}`}>{detail.member[m].party ? '완료' : '미참여'}</span>
                                                     <span>{detail.member[m].note}</span>
                                                 </>
                                             }
